@@ -1,9 +1,9 @@
-import express from 'express';
-import cors from 'cors'
-
+const express = require("express");
+const cors = require("cors")
+const { getPaymentsByLoanId } = require('./data/data.js');
 const app = express()
 const PORT = process.env.PORT || 3000;
-import { getPaymentsByLoanId } from './data/data.js';
+
 
 app.use(cors())
 
