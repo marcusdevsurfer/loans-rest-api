@@ -1,4 +1,4 @@
-export const payments = [
+const payments = [
     {
         "date": new Date(2024, 8, 16),
         "loanId": 7,
@@ -16,6 +16,8 @@ export const payments = [
     }
 ]
 
-export const getPaymentsByLoanId = (id) => {
+const getPaymentsByLoanId = (id) => {
     return payments.filter((payment) => payment.loanId == id)
 }
+
+module.exports = { getPaymentsByLoanId }
