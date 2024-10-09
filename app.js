@@ -1,28 +1,14 @@
-const express = require('express');
+import express from 'express';
 const app = express()
 const PORT = process.env.PORT || 3000;
+import { getPaymentsByLoanId } from './data/data.js';
 
-app.get('/api/payments', (req, res) => {
-    res.send([
-        {
-            "date": "16/08/2024",
-            "loanId": 7,
-            "amount": 3000
-        },
-        {
-            "date": "23/08/2024",
-            "loanId": 7,
-            "amount": 3000
-        },
-        {
-            "date": "30/08/2024",
-            "loanId": 7,
-            "amount": 3000
-        }
-    ])
+app.get('/api/users/:id/payments', function (req, res) {
+    res.send(getPaymentsByLoanId(req.params.id))
 })
 
 app.listen(PORT, () => {
+    console.log(`Server started`)
     console.log(`Server Listening on PORT:", ${PORT}`);
 });
 
