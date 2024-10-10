@@ -14,16 +14,18 @@ const addPayment = (res, date, amount, loanId) => {
         })
     });
 }
-const getPaymentsByLoanId = (res, id) => {
+const getPaymentsByLoanId = (id) => {
     const sql = `SELECT * FROM payments WHERE loanId = ?`
     const params = [id]
-    db.all(sql, params, (err, result) => {
-        if (err) {
-            res.status(404).json({ "error": err.message })
-            return
-        }
-        return res.json(result)
-    });
+    return new Promise((resolve, reject) => {
+        db.all(sql, params, (err, result) => {
+            if (err) {
+                reject(err)
+            }
+            else resolve(result)
+        });
+    })
+
 }
 
 module.exports = { getPaymentsByLoanId, addPayment }

@@ -16,10 +16,11 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get("/api/loans/:id/payments", (req, res) => {
-    getPaymentsByLoanId(res, req.params.id)
+app.get("/api/loans/:id/payments", async (req, res) => {
+    const data = await getPaymentsByLoanId(res, req.params.id)
+    res.send(data) 
 })
-app.post("/api/payments", (req, res) => {
+app.post("/api/payments", async (req, res) => {
     const date = req.body.date
     const amount = req.body.amount
     const loanId = req.body.loanId
