@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/api/loans/:id/payments", (req, res) => {
-    res.send(getPaymentsByLoanId(req.params.id))
+    getPaymentsByLoanId(res, req.params.id)
 })
 app.post("/api/payments", (req, res) => {
     const date = req.body.date
