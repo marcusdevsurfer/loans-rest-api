@@ -1,14 +1,18 @@
 const sqlite3 = require('sqlite3');
-const db = new sqlite3.Database('loansdb.sql');
+const db = new sqlite3.Database('loansdb.sqlite');
 
-//IN PROGRESS
-const addPayment = async (payment) => {
-    try {
-        await db.run("INSERT INTO payments (date, amount, loandId) VALUES (?, ?,?)", [payment.date, payment.amount, payment.loandId]);
-        console.log('Datos insertados exitosamente');
-    } catch (error) {
-        console.error('Error al insertar datos:', error);
-    }
+const addPayment = (res, date, amount, loanId) => {
+    const sql = 'INSERT INTO payments (date,amount,loanId) VALUES (?,?,?)'
+    const params = [date, amount, loanId]
+    db.run(sql, params, (err, result) => {
+        if (err) {
+            res.status(400).json({ "error": err.message })
+            return
+        }
+        res.json({
+            "message": "success",
+        })
+    });
 }
 const getPaymentsByLoanId = async (id) => {
     const query = "SELECT * FROM payments WHERE loanId =" + id
@@ -20,4 +24,4 @@ const getPaymentsByLoanId = async (id) => {
     }
 }
 
-module.exports = { getPaymentsByLoanId }
+module.exports = { getPaymentsByLoanId, addPayment }
