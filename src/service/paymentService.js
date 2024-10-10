@@ -14,14 +14,16 @@ const addPayment = (res, date, amount, loanId) => {
         })
     });
 }
-const getPaymentsByLoanId = async (id) => {
-    const query = "SELECT * FROM payments WHERE loanId =" + id
-    try {
-        const payments = await db.get(query);
-        return payments
-    } catch (error) {
-        console.error('Error al obtener datos:', error);
-    }
+const getPaymentsByLoanId = (res, id) => {
+    const sql = `SELECT * FROM payments WHERE loanId = ?`
+    const params = [id]
+    db.all(sql, params, (err, result) => {
+        if (err) {
+            res.status(404).json({ "error": err.message })
+            return
+        }
+        return res.json(result)
+    });
 }
 
 module.exports = { getPaymentsByLoanId, addPayment }
