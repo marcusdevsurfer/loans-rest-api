@@ -31,13 +31,35 @@ app.get('/api', (req, res) => {
     }
 });
 
+app.get('/api/loan/:id/payments', (req, res) => {
+    res.set('content-type', 'application/json');
+    const sql = 'SELECT * FROM payments WHERE payment_loanId=?';
+    let data = { payments: [] };
+    try {
+        DB.all(sql, req.params.id, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            rows.forEach((row) => {
+                data.payments.push({ date: row.payment_date, amount: row.payment_amount, loanId: row.payment_loanId });
+            });
+            let content = JSON.stringify(data);
+            res.send(content);
+        });
+    } catch (err) {
+        console.log(err.message);
+        res.status(467);
+        res.send(`{"code":467, "status":"${err.message}"}`);
+    }
+});
+
 app.post('/api', (req, res) => {
     console.log(req.body);
     res.set('content-type', 'application/json');
     const sql = 'INSERT INTO payments(payment_date, payment_amount, payment_loanId) VALUES (? , ?, ?)';
     let newId;
     try {
-        DB.run(sql, [req.body.date, req.body.amount,req.body.loanId], function (err) {
+        DB.run(sql, [req.body.date, req.body.amount, req.body.loanId], function (err) {
             if (err) throw err;
             newId = this.lastID; //provides the auto increment integer enemy_id
             res.status(201);
