@@ -3,8 +3,8 @@ const sql3 = sqlite3.verbose();
 
 // const DB = new sql3.Database(':memory:', sqlite3.OPEN_READWRITE, connected);
 // const DB = new sql3.Database('', sqlite3.OPEN_READWRITE, connected);
-//const DB = new sql3.Database('./mydata.db', sqlite3.OPEN_READWRITE, connected);
-const DB = new sql3.Database('./mydatatest.db', sqlite3.OPEN_READWRITE, connected);
+const DB = new sql3.Database('./mydata.db', sqlite3.OPEN_READWRITE, connected);
+//const DB = new sql3.Database('./mydatatest.db', sqlite3.OPEN_READWRITE, connected);
 
 
 function connected(err) {
