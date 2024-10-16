@@ -25,11 +25,12 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+// Obtener todos los payments by loanId
+router.get('/:loanId', async (req, res) => {
     try {
-        const { id } = req.params
-        const payment = await Payment.findById(id)
-        res.status(200).json(payment)
+        const { loanId } = req.params
+        const payments = await Payment.find({loanId: loanId})
+        res.status(200).json(payments)
     } catch {
         (e) => {
             res.status(500).json({ message: e.message })
