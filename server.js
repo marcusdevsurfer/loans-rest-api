@@ -16,7 +16,7 @@ app.use(express.json())
 
 
 //Conexion a mongo db
-mongoose.connect(process.env.MONGODB_DEV_URI, {
+mongoose.connect(process.env.MONGODB_PRO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 50000, // Increase timeout to 30 seconds
