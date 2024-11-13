@@ -1,7 +1,7 @@
-import express from 'express'
-import Loan from '../models/Loan.js'
+import express from 'express';
+import Loan from '../models/Loan.js';
 
-const router = express.Router()
+const router = express.Router();
 
 // Create a new Loan
 router.post('/save', async (req, res) => {
@@ -26,17 +26,15 @@ router.get('/', async (req, res) => {
     }
 });
 
-// // Obtener todos los payments by loanId
-// router.get('/:loanId', async (req, res) => {
-//     try {
-//         const { loanId } = req.params
-//         const payments = await Payment.find({loanId: loanId})
-//         res.status(200).json(payments)
-//     } catch {
-//         (e) => {
-//             res.status(500).json({ message: e.message })
-//         }
-//     }
-// })
+// Get Loan by ID
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const loan = await Loan.findOne({_id: id})
+        res.status(200).json(loan);
+    } catch(error) {
+        res.status(404).json({ message: 'Loan not found' });
+    }
+})
 
 export default router
