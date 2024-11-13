@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import paymentRoutes from './routes/payments.js';
+import loanRoutes from './routes/loans.js';
 
 dotenv.config()
 
@@ -15,12 +16,13 @@ app.use(express.json())
 
 
 //Conexion a mongo db
-mongoose.connect(process.env.MONGODB_PRO_URI)
+mongoose.connect(process.env.MONGODB_DEV_URI)
     .then(() => console.log('Mongoose connected'))
     .catch(err => console.log(err))
     
 // Rutas
 app.use('/api/payments', paymentRoutes);
+app.use('/api/loans', loanRoutes);
 
 app.listen(PORT, (err) => {
     if (err) {
