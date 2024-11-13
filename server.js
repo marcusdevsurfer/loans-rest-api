@@ -16,10 +16,15 @@ app.use(express.json())
 
 
 //Conexion a mongo db
-mongoose.connect(process.env.MONGODB_DEV_URI)
+mongoose.connect(process.env.MONGODB_DEV_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 50000, // Increase timeout to 30 seconds
+    socketTimeoutMS: 50000 // Close sockets after 45 seconds of inactivity
+})
     .then(() => console.log('Mongoose connected'))
     .catch(err => console.log(err))
-    
+
 // Rutas
 app.use('/api/payments', paymentRoutes);
 app.use('/api/loans', loanRoutes);
