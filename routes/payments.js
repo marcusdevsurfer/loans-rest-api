@@ -3,8 +3,6 @@ import Payment from '../models/Payment.js'
 
 const router = express.Router()
 
-
-// Crear un nuevo Payment
 router.post('/save', async (req, res) => {
     try {
         const newPayment = await Payment.create(req.body);
@@ -15,7 +13,6 @@ router.post('/save', async (req, res) => {
     }
 });
 
-// Obtener todos los items
 router.get('/', async (req, res) => {
     try {
         const payments = await Payment.find();
@@ -25,11 +22,10 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Obtener todos los payments by loanId
-router.get('/:loanId', async (req, res) => {
+router.get('/:loan', async (req, res) => {
     try {
-        const { loanId } = req.params
-        const payments = await Payment.find({loanId: loanId})
+        const { loan } = req.params
+        const payments = await Payment.find({ loan: loan })
         res.status(200).json(payments)
     } catch {
         (e) => {
